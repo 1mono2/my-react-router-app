@@ -1,18 +1,35 @@
-# Welcome to React Router!
+# React Router Blog
 
-A modern, production-ready template for building full-stack React applications using React Router.
+React Router v7を使ったモダンなブログアプリケーションです。サーバーサイドレンダリング（SSR）、データローディング、ルーティングなどの機能を実装しています。
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
 
-## Features
+## 機能
 
-- 🚀 Server-side rendering
+- 🚀 サーバーサイドレンダリング（SSR）
+- 📝 ブログ記事の作成・編集・削除
+- 🏷️ タグによる記事の分類とフィルタリング
+- 🔍 記事の検索機能
+- 📱 レスポンシブデザイン
+- 🌙 ダークモード対応
 - ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🔒 TypeScriptによる型安全性
+- 🎨 TailwindCSSによるスタイリング
+
+## ページ構成
+
+- `/` - 記事一覧ページ（検索・タグフィルタ対応）
+- `/posts/:slug` - 記事詳細ページ
+- `/tags/:tag` - タグ別記事一覧
+- `/admin` - 管理画面（記事一覧）
+- `/admin/posts/new` - 新規記事作成
+- `/admin/posts/:slug/edit` - 記事編集
+
+## 認証
+
+管理画面は簡易的なトークン認証を使用しています。デフォルトのトークンは `admin123` です。
+
+本番環境では、環境変数 `ADMIN_TOKEN` を設定してセキュリティを強化してください。
 
 ## Getting Started
 
@@ -44,18 +61,30 @@ npm run build
 
 ## Deployment
 
+### Renderへのデプロイ
+
+このプロジェクトには `render.yaml` が含まれています。Renderでデプロイするには：
+
+1. [Render](https://render.com) にアカウントを作成
+2. 新しいWebサービスを作成
+3. GitHubリポジトリを接続
+4. 環境変数 `ADMIN_TOKEN` を設定（オプション）
+5. デプロイを開始
+
+Renderは自動的に `render.yaml` の設定を読み込みます。
+
 ### Docker Deployment
 
-To build and run using Docker:
+Dockerを使用してデプロイする場合:
 
 ```bash
-docker build -t my-app .
+docker build -t react-router-blog .
 
 # Run the container
-docker run -p 3000:3000 my-app
+docker run -p 3000:3000 react-router-blog
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+Dockerコンテナは以下のプラットフォームにデプロイできます：
 
 - AWS ECS
 - Google Cloud Run
@@ -64,24 +93,40 @@ The containerized application can be deployed to any platform that supports Dock
 - Fly.io
 - Railway
 
-### DIY Deployment
+### その他のデプロイ方法
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
+Node.jsアプリケーションとして、以下のファイルをデプロイしてください：
 
 ```
 ├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
+├── package-lock.json
 ├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+│   ├── client/    # 静的アセット
+│   └── server/    # サーバーサイドコード
 ```
 
-## Styling
+`npm run build` でビルド後、`npm start` でサーバーを起動します。
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## データストレージ
+
+現在はインメモリデータストアを使用しています。本番環境では、以下のようなデータベースへの移行を推奨します：
+
+- PostgreSQL
+- MongoDB
+- SQLite
+- その他のデータベース
+
+データアクセス層は `app/data/posts.server.ts` に集約されているため、データベースへの移行は比較的簡単です。
+
+## スタイリング
+
+[Tailwind CSS](https://tailwindcss.com/) を使用してスタイリングしています。ブログコンテンツには `prose` クラスを使用して読みやすいスタイルを適用しています。
+
+## 参考資料
+
+- [React Router ドキュメント](https://reactrouter.com/)
+- [React Router v7 ガイド](https://reactrouter.com/docs)
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️ using React Router v7.
